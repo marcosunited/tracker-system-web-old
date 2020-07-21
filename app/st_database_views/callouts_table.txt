@@ -1,0 +1,48 @@
+select 
+    callout_id,
+    callout_time,
+    docket_number,
+    time_of_arrival,
+    time_of_departure,
+    callouts.job_id,
+    job_number,
+    job_name,
+    job_group,
+    job_address_number,
+    job_address,
+    job_suburb,
+    rounds.round_name,
+    rounds.round_id,
+    fault_name,
+    callouts.fault_id,
+    technician_fault_name,
+    floor_no,
+    order_number,
+    callout_description,
+    lift_ids,
+    technician_name,
+    callouts.technician_fault_id,
+    tech_description,
+    technicians.technician_id,
+    priority_name,
+    callout_status_name,
+    callouts.callout_status_id,
+    callouts.accepted_id,    
+    _accepted.accepted_name,
+    _chargeable.chargeable_name,
+    _chargeable.chargeable_id,
+    is_printed
+    from callouts
+
+    inner join  jobs on callouts.job_id = jobs.job_id
+    inner join _faults on callouts.fault_id = _faults.fault_id
+    
+    inner join _technician_faults on callouts.technician_fault_id = _technician_faults.technician_fault_id
+    
+    
+    inner join technicians on callouts.technician_id = technicians.technician_id
+    inner join _priorities on callouts.priority_id = _priorities.priority_id
+    inner join _callout_status on callouts.callout_status_id = _callout_status.callout_status_id
+    inner join _chargeable on callouts.chargeable_id = _chargeable.chargeable_id
+    inner join _accepted on callouts.accepted_id = _accepted.accepted_id
+    inner join rounds on jobs.round_id = rounds.round_id

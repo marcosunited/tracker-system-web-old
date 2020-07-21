@@ -1,0 +1,14 @@
+As of 15 April 2014
+
+Jquery 2.1.0
+Jquery UI 1.10.4
+Jquery Mobile 1.4.2
+
+
+LiveQuery 1.1.1 -> Keep Watching for stable 2.0 release
+Tablesorter 2.15.14 
+jQuery Validation Plugin - v1.12.0 
+Timepicker 1.4.4
+Mousetrap v1.4.6
+DOMPDF Nightly Build from 5/5/2014
+

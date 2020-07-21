@@ -1,0 +1,46 @@
+  <h1>Maintenance</h1>
+            <table width="95%" border="1" style="border-collapse:collapse" id="maintable2">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Job Address</th>
+                        <th>Lifts</th>
+                        <th>Technician</th>
+                        <th>Tech Notes</th>
+                        <th>Area Serviced</th>
+                        <th>Service Type</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?foreach ($maintenance as $row){?>
+                        <tr>
+                            <td>
+                                <?=toDate($row["maintenance_date"])?>
+                            </td>
+
+
+                            <td>
+                                <?=$row["job_address_number"]?>
+                                    <?=$row["job_address"]?>,
+                                        <?=$row["job_suburb"]?>
+                            </td>
+                            <td>
+                                <?=liftNames($row["lift_ids"])?>
+                            </td>
+                            <td>
+                                <?=$row["technician_name"]?>
+                            </td>
+                            <td>
+                                <?=$row["maintenance_notes"]?>
+                            </td>
+                            <td>
+                                <?=areaNames($row["service_area_ids"])?>
+                            </td>
+                            <td>
+                                <?=typeNames($row["service_type_ids"])?>
+                            </td>
+                        </tr>
+                        <? }?>
+                </tbody>
+            </table>

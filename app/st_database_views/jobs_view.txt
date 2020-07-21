@@ -1,0 +1,18 @@
+SELECT 
+    job_id,
+    job_address,
+    job_address_number,
+    job_suburb,
+    technician_id,
+    technician_name,
+    jobs.status_id,
+    frequency_name,
+    (select count(*) from callouts where job_id = jobs.job_id) as call_count,
+    (select maintenance_date from maintenance where job_id = jobs.job_id order by maintenance_date DESC limit 1) as last_serviced
+FROM rounds
+    inner join jobs on jobs.round_id = rounds.round_id 
+    inner join _frequency on jobs.frequency_id = _frequency.frequency_id
+    inner join technicians on technicians.round_id = rounds.round_id
+ORDER BY
+    jobs.job_address,
+    jobs.job_address_number asc

@@ -1,0 +1,5 @@
+{
+    "require": {
+        "clicksend/clicksend-php": "^4.0"
+    }
+}

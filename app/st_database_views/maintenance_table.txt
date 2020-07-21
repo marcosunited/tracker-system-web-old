@@ -1,0 +1,28 @@
+SELECT 
+jobs.job_id,
+job_name,
+job_address_number,
+job_address,
+job_suburb,
+job_number,
+job_group,
+maintenance.task_ids,
+maintenance_date,
+maintenance_toa,
+maintenance_tod,
+maintenance_id,
+technicians.technician_id,
+technician_name,
+lift_ids,
+service_area_ids,
+service_type_ids,
+maintenance_notes,
+customer_signature,
+technician_signature,
+completed_id
+
+
+FROM `maintenance` 
+inner join jobs on maintenance.job_id = jobs.job_id
+inner join technicians on maintenance.technician_id = technicians.technician_id
+

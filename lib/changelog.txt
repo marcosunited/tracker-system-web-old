@@ -1,0 +1,78 @@
+14.2.21
+ - Big code cleanup, have gone through all files and cleand up coding standards, cleaned up some functions etc.
+ - Backup function now works from the global database configuration.
+14.1.23
+ - Removed the pager for Tablesoreter because its a dodgy piece of shit.
+14.1.21
+ - More Improvements to naming conventions
+ - Moved functions and controllers in the lib to their own folders, broke core functions into many files.
+ - Lowercase function and file name convention.
+ - Ajax jquery functions working, enabling links and forms to use AJAX to post.
+ 
+14.1.20 
+ - More Improvements to framework structure, moved more into "library" folder.
+ - Core.php only includes .php files now aswell as isfile
+ 
+14.1.14
+ - Added touch detection and touch template has been started
+ - Usual cleanups
+ 
+14.1.10
+ - Begin Complete overhaul, bring it to standard.
+ - Changed index.php better security for SQL injection attacks
+ - Default Fonts changed to a modern type
+ - Buttons Nice blue CSS
+ - Menu Nice CSS Gradient and hovers, replacing images (HTML5 YAY!)
+ - Square edges on forms
+ - In fact, Removal of Jquery theming on all forms and replaced with css for speed.
+ - Framework is now independant of app completly, meaning just replacing the framework dir upgrades.
+13.8.29
+ - Changed to better date versioning
+ 
+
+21.6.2013
+ - Moved back to integraded app, dropped the idea of a single framework dir
+ 
+20.6.2013
+ - Uploaded to clearsky.net.au/element_0.1
+ - This will be the ONLY version around except for local development where it should be forked
+   and any changes to be submitted back to this original. Could use GIT??
+ - Changed app() to app() for compatibility with shared cpanel hosting
+ - Changed menu() to showmenu()
+1.6.2013
+ - Renamed project to Element
+ - Fixed URL and path variables in config.php to auto detect.
+ - Moved index.php to the framework directory, to be included from app path
+ - Removed EVAL and replaced with call_user_func (better security)
+20.5.2013
+ - Moved framework to external folder within web root ie c:\xampp\htdocs\framework, enabling many projects to work of one working framework.
+ - 
+17.5.13
+ - Moved the entire framework into "framework" folder, to keep application and framework completly seperate
+ - Reconfigured init, core, index and config files to suit new directory structure of "framework"
+
+5.5.13
+	- Changed config.php to auto get the app path and url, using the appname var and some $_SERVER vars
+  -Menu Order Added to menu table.
+  -Added jquery UI TimePicker
+  - Change to crud.php _getValues, now if null form has been called, $values will get values from any corrisponding $_REQUEST[frm_*] passed.
+13.4.13
+  - Removed some old code that never eventuated (Action function??)
+  - Moved all Jquery to local server from CDN to improve speed
+  - Changed from Google open sans to plain sans-serif to increase speed.
+  - Updated jquery and other 3rd party plugins.
+  - added jredirect for those pesky headers, alternative redirect method
+  - MAJOR - Security implimented, see documentation for details. Encrypted passwords.
+  - MAJOR - Menu now uses the menu table in the database, and shows relevent pages according to auth_level.
+12.4.13
+  -Added session variables and proper user login and administraton.
+
+31.1.13
+ - patched _getValues to return all $value[column_name] as blank if now row is returned, rather than return nothing which causes problems
+
+23.1.13
+- View Plain to be changes to have a switch not to run the alert a second time if loaded with a header.
+
+Version 20.1.13 
+- Added parentListReq php function to core.php, Requires validation on submit using the class="required" option
+- Fixed some bugs with the view_header and footer in the core

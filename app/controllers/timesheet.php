@@ -20,8 +20,8 @@
 			$tech = get_query("select * from technicians where technician_id = $tech_id");
 			
 			$query = "SELECT * FROM callouts_view 
-						WHERE time_of_arrival > $start 
-						AND time_of_departure < $end 
+						WHERE time_of_arrival >= $start 
+						AND time_of_departure <= $end 
 						AND time_of_departure <> 0
 						AND technician_id = $tech_id";
 			
@@ -30,8 +30,8 @@
             $maintenance = get_query("select * from maintenance
 									inner join jobs on maintenance.job_id = jobs.job_id
 									inner join technicians on maintenance.technician_id = technicians.technician_id
-									where maintenance.maintenance_toa > $start 
-									AND maintenance.maintenance_tod < $end 
+									where maintenance.maintenance_toa >= $start 
+									AND maintenance.maintenance_tod <= $end 
 									AND maintenance.maintenance_tod <> 0
 									AND ( maintenance.lift_id IS NULL OR  maintenance.lift_id > 0)
 									AND maintenance.technician_id = $tech_id");

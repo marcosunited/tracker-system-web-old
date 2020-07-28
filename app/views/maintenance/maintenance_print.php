@@ -105,8 +105,7 @@ a {
   <body>
   <header class="clearfix">
       <div id="logo">
-       <? $fileLogo = $_SERVER['DOCUMENT_ROOT']."/melbourne-tracker/app/images/logo.png";?>
-        <img src= <?=$fileLogo?> >    
+      <img src="<?= app('path') ?>/app/images/logo.png">
       </div>
       <div id="company">
         <div>Unit 3 / 260 Hyde St YARRAVILLE VIC 3013
@@ -236,14 +235,16 @@ a {
 
   </html>
   <?
-	$contents = ob_get_contents();
+  $contents = ob_get_contents();
 	ob_end_clean();
-    
-	require_once $_SERVER['DOCUMENT_ROOT'].'/melbourne-tracker/dompdf/lib/html5lib/Parser.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/melbourne-tracker/dompdf/lib/php-font-lib/src/FontLib/Autoloader.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/melbourne-tracker/dompdf/lib/php-svg-lib/src/autoload.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/melbourne-tracker/dompdf/src/Autoloader.php';
   
+	require_once app('path').'/dompdf/lib/html5lib/Parser.php';
+  require_once app('path').'/dompdf/lib/php-font-lib/src/FontLib/Autoloader.php';
+  require_once app('path').'/dompdf/lib/php-svg-lib/src/autoload.php';
+  require_once app('path').'/dompdf/src/Autoloader.php';
+  
+  
+
   Dompdf\Autoloader::register();
   
   use Dompdf\Dompdf;
@@ -255,7 +256,7 @@ a {
   // (Optional) Setup the paper size and orientation
   $dompdf->setPaper('A4', 'landscape');
   $dompdf->render();
-  $file_location = $_SERVER['DOCUMENT_ROOT']."/melbourne-tracker/pdfReports/".$visit["job_address"]."-".$visit["maintenance_id"].".pdf";
+  $file_location = app('path').'/pdfReports/'.$visit["job_address"]."-".$visit["maintenance_id"].".pdf";
   
   $dompdf->stream($file_location) ;
   //file_put_contents($file_location, $dompdf->output());

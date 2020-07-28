@@ -20,7 +20,7 @@
         <label>Finish Date</label><input type="date" name='frm_finish_time'  id='frm_finish_time' value='<?=$job["finish_time"]?>'><br>
         <label>Price</label><input name='frm_price'  id='frm_price' value='<?=$job["price"]?>'><br>
 		<label>Cancellation Date</label><input type="datetime-local" name='frm_cancel_time'  id='frm_cancel_time' value='<?=$job["cancel_time"]?>'><br>
-		<label>Cancel File: </label><input type="file" name="file2" id="file2"><a href="<?=app('url')?>/app/uploads/<?=$job["cancel_file"]?>">Download</a><br></div>
+        <br></div>
 		<label>CPI</label><input name='frm_cpi'  id='frm_cpi' value='<?=$job["cpi"]?>'><br>
         <label>Name <div class="desc">Street name and numbers</div></label>
             <input name="frm_job_name" id="frm_job_name" value="<?=$job["job_name"]?>" class="required"><br>

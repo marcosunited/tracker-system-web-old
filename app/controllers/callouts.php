@@ -70,7 +70,7 @@
 
                         $data = array
                         (
-                                "watchlist" => query("select * from callouts_view where callout_time > $last_week  AND job_group like '%WATCHLIST%'")
+                                "watchlist" => query("select * from callouts_view where callout_time >= $last_week  AND job_group like '%WATCHLIST%'")
                         );
                         
                         view_plain("callouts/callouts_watchlist",$data);

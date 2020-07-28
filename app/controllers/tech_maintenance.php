@@ -10,8 +10,8 @@
             $query = "select * from maintenance
 									inner join jobs on maintenance.job_id = jobs.job_id
 									inner join technicians on maintenance.technician_id = technicians.technician_id
-									where maintenance_date > $last_week
-                                    and maintenance_date < $next_week
+									where maintenance_date >= $last_week
+                                    and maintenance_date <= $next_week
                                     and (lift_id IS NULL OR  lift_id > 0)
                                     order by maintenance.maintenance_date ASC";
                                     

@@ -44,6 +44,8 @@
         <label>Technician</label>
         <?parentListReq("frm_technician_id","technicians",$values["technician_id"],"technician_name","where technicians.status_id = 1 order by technician_name ASC")?><br>
 
+        <label>Invoice notes</label><textarea name="frm_invoice_notes" disabled readonly><?= $job['invoice_notes'] ?></textarea><br>
+
         <h2>Call Details</h2>
         <label>Lifts</label>
 

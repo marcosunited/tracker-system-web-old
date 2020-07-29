@@ -90,6 +90,8 @@
                 function form()
                 {
                         $values = _getValues("callouts","callout_id");
+                        $jobQuery = query("select j.job_id, j.job_number , j.job_name, j.invoice_notes from jobs j WHERE j.job_id =".$values["job_id"]);
+                        $job = mysqli_fetch_assoc($jobQuery);
 
                         if($values["callout_time"]=="")
                         {
@@ -115,7 +117,8 @@
                         
                         $data = array
                         (
-                                "values"=>$values
+                                "values"=>$values,
+                                "job"=> $job
                         );
 
                         view("callouts/callouts_form",$data);                                            

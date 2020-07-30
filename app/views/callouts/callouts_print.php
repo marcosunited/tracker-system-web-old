@@ -159,7 +159,7 @@
         </div>
       </div>
     </div>
-    <table>
+    <table style="width: 704px;">
       <tr>
         <td colspan="2">
           <div style="border:0px solid black;height:300px;padding:10px;">

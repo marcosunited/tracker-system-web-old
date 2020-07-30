@@ -39,12 +39,12 @@
         <tr>
 			<td><?=$row['job_number']?></td>
             <td><?=$row['job_name']?></td>
-            <td id="<?=$row['callout_id']?>" class="classID"><?=$row['callout_id']?></td>
             <td><?=$row['callout_description']?></td>
             <td><?=toDate($row["callout_time"])?></td>
             <td><?=toTime($row["callout_time"])?></td>
             <td><?=$row['docket_number']?></td>
-			<td><?=$row['callout_status_name']?></td>
+            <td><?=$row['callout_status_name']?></td>
+            <td id="<?=$row['callout_id']?>" class="classID"><?=$row['callout_id']?></td>
 			<td><?=$row['chargeable_name']?></td>
             <td><?=$row['verify']?></td>
         </tr>

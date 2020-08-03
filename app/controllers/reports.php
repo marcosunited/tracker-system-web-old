@@ -157,7 +157,7 @@
             $callouts = get_query($query);
 
             $query1 = "select * from repairs 
-            inner join jobs where repairs.job_id = jobs.job_id
+            inner join jobs on repairs.job_id = jobs.job_id
             where job_group like '%$group_name%' 
             AND repair_time >= $start_date 
             AND repair_time <= $end_date";   
@@ -425,22 +425,6 @@
                                 ( W.year_month_week BETWEEN $startYearMonthWeek AND $endYearMonthWeek )
                         ORDER BY W.maintenance_id ,W.year_month_week ,W.date ";
 
-            /*
-
-
-
-            foreach($_REQUEST as $req=>$val)
-            {
-                if(strstr($req,"lift_")){
-                    $query .= " AND lift_ids like '%|$val|%' ";
-                }
-            }
-            
-            if(req("frm_task_id"))
-                $query .= " AND task_ids like '%|".req("frm_task_id")."|%'";
-            
-            if(req("frm_order_by"))
-                $query .=" order by ".req("frm_order_by")." ".req("frm_direction");*/
             
             $agent_id = $job["agent_id"];
             $agent = mysqli_fetch_array(query("select * from agents where agent_id = $agent_id"));
@@ -614,10 +598,10 @@
             $contents = stripslashes($contents);
 
             define("DOMPDF_ENABLE_HTML5PARSER", true);
-define("DOMPDF_ENABLE_FONTSUBSETTING", true);
-define("DOMPDF_UNICODE_ENABLED", true);
-define("DOMPDF_DPI", 160);
-define("DOMPDF_ENABLE_REMOTE", true);
+            define("DOMPDF_ENABLE_FONTSUBSETTING", true);
+            define("DOMPDF_UNICODE_ENABLED", true);
+            define("DOMPDF_DPI", 160);
+            define("DOMPDF_ENABLE_REMOTE", true);
 
             require_once(app('lib_path')."/functions/dompdf/dompdf_config.inc.php");
             $dompdf = new DOMPDF();

@@ -5,7 +5,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Docket</title>
+  <title>Docket ID - <?= $callout["callout_id"] ?> </title>
 </head>
 <style>
   a {
@@ -104,6 +104,9 @@
 
 <body>
   <header class="clearfix">
+    <div id="topbar">
+      <a href="<?= app('url') ?>/exec/callouts/printPdf/?view_type=pdf&frm_callout_id=<?= $callout["callout_id"] ?>" id="printPdf">Print As PDF</a>
+    </div>
     <table>
       <tr>
         <td id="logo">
@@ -241,14 +244,17 @@
 </body>
 
 </html>
+
 <?
-	$contents = ob_get_contents();
-	ob_end_clean();
-    
-	require_once(app('lib_path')."/functions/dompdf/dompdf_config.inc.php");
-  $dompdf = new DOMPDF();
-  $dompdf->set_option('enable_html5_parser', TRUE);
-	$dompdf->load_html($contents);
-	$dompdf->render();
-	$dompdf->stream($callout["job_address"]."-".$callout["callout_id"].".pdf"); 
+  if ($view_type != 'plain'){
+    $contents = ob_get_contents();
+    ob_end_clean();
+      
+    require_once(app('lib_path')."/functions/dompdf/dompdf_config.inc.php");
+    $dompdf = new DOMPDF();
+    $dompdf->set_option('enable_html5_parser', TRUE);
+    $dompdf->load_html($contents);
+    $dompdf->render();
+    $dompdf->stream($callout["job_address"]."-".$callout["callout_id"].".pdf"); 
+  }
 ?>

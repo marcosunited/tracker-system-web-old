@@ -300,6 +300,7 @@
         {
             
             $maintenance_id = req("frm_maintenance_id");
+            $view_type = req("view_type");
             
             $query = "select * from maintenance inner join jobs on maintenance.job_id = jobs.job_id
             inner join technicians on maintenance.technician_id = technicians.technician_id where maintenance_id = $maintenance_id";
@@ -309,11 +310,12 @@
             $lifts = get_query("select * from lifts where job_id = $job_id");
 
             $data = array(
-                                "visit" => $visit,
-                                "lifts"=>$lifts
+                "visit" => $visit,
+                "lifts"=>$lifts,
+                "view_type"=>$view_type
             );
             
-            view_plain("maintenance/maintenance_print",$data);        
+            view_plain("maintenance/maintenance_print",$data);
         }
         
         function checkDocket()

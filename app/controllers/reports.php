@@ -90,8 +90,8 @@
                     //number of calls the job has
                     $query = "select * from callouts_view where job_id = $job_id and callout_time >= $start_date AND callout_time <= $end_date";
                     $callouts = get_query($query);
-					$callCount = count($callouts);
-					$callCountTotal = $callCountTotal + $callCount;
+                    $callCount = count($callouts);
+                    $callCountTotal = $callCountTotal + $callCount;
 					
 					foreach($callouts as $callout){
 						if(isset($faults[$callout["fault_name"]])){
@@ -130,6 +130,39 @@
                     
                 );
                 view_plain("reports/reports_callouts_generate",$data);
+        }
+
+        function callouts_query()
+        {
+            $start_date = strtotime(req("start_date"));
+            $end_date = strtotime(req("end_date"));
+            $job_id = req("job_id");
+
+            $query_jobs = "select job_name from jobs where job_id = $job_id";
+
+            $query = "select callout_id,  
+                            callout_time,
+                            time_of_arrival,
+                            time_of_departure,
+                            job_number,
+                            job_name,
+                            lift_ids,
+                            order_number,
+                            fault_name,
+                            technician_fault_name,
+                            tech_description,
+                            technician_name
+                    from callouts_view where job_id = $job_id and callout_time >= $start_date AND callout_time <= $end_date";
+            
+            $callouts = get_query($query);
+            $job_name = get_query($query_jobs);
+
+            $data = array(
+                "callouts"=>$callouts,
+                "job_name"=>$job_name
+            );
+
+            view_plain("reports/reports_callouts_query",$data);
         }
         
         function group_generate()

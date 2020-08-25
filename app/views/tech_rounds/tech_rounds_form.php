@@ -23,7 +23,7 @@
                 $(location).attr('href',"<?=app('url')?>/exec/tech_maintenance/newCall/?frm_job_id=<?=$job['job_id']?>&job_name=<?=$job['job_name']?>");
             });
             $("#submit3").click(function(){
-                $(location).attr('href',"mailto:system@unitedlifts.com.au?subject=<?=$job['job_number']?>||Tech Note");
+                $(location).attr('href',"mailto:info@unitedlifts.com.au?subject=<?=$job['job_number']?>||Tech Note");
             });                 
         });
     </script>

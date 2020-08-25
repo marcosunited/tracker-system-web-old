@@ -182,9 +182,7 @@
                         $tech_phone = mysqli_fetch_array(query("select * from technicians where technician_id = $tech_id"));
                         $tech_phone1 = $tech_phone["technician_phone"];
 
-
-                        //EMAIL PART Disabled until my brain is working to fix it.						
-						//include(app('path')."\\app\\views\\callouts\\callouts_email.php");
+                        //include(app('path')."\\app\\views\\callouts\\callouts_email.php");
 
                         if(req("frm_callout_status_id")==1 && req("frm_callout_id") != ''){
                         try {
@@ -234,6 +232,7 @@
                 function printPdf()
                 {
                         $callout_id = req("frm_callout_id");
+                        $view_type = req("view_type");
                         
                         $query = "select * from callouts 
                         inner join jobs on callouts.job_id = jobs.job_id
@@ -249,7 +248,8 @@
                         
                         $data = array
                         (
-                                "callout" => $callout
+                                "callout" => $callout,
+                                "view_type" => $view_type
                         );
                         
                         view_plain("callouts/callouts_print",$data);

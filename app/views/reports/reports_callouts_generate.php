@@ -58,7 +58,7 @@
                 <td>
                     <?= $row["lift_count"] ?>
                 </td>
-                <td>
+                <td id="<?= $row['job_id'] ?>" class="classIDJob">
                     <?= $row["call_count"] ?>
                 </td>
                 <td>
@@ -131,6 +131,12 @@
             color: #000;
             text-decoration: none
         }
+
+        .classId, .classIDJob {
+            cursor: pointer;
+            text-decoration: underline;
+            color: blue;
+        }
     </style>
 </div>
 
@@ -157,9 +163,7 @@
                 [0, "asc"]
             ],
             paging: false,
-            searching: false,
-
-
+            searching: false
         });
     });
 </script>
@@ -168,5 +172,10 @@
     $(".classID").on('click', function() {
         var id = $(this).attr('id');
         window.open("<?= app('url') ?>/exec/jobs/form/?frm_job_id=" + id);
+    });
+
+    $(".classIDJob").on('click', function() {
+        var jobId = $(this).attr('id');
+        window.open("<?= app('url') ?>/exec/reports/callouts_query/?start_date=<?= req("frm_start_date") ?>&end_date=<?= req("frm_end_date") ?>" + "&job_id=" + jobId)
     });
 </script>

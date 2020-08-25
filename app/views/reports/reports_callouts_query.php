@@ -4,10 +4,9 @@
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.13/sorting/date-de.js"></script>
 
 <div id="topbar">
-    <a href="#" id="printPdf">Print As PDF</a>
+    <a href="#" id="goBack">Go back</a>
 </div>
-<button id="hide" class="noprint">Hide Maintenance</button>
-<button id="show" class="noprint">Show Maintenance</button>
+
 <div id="printArea" contenteditable="true">
     <div id="logo">
         <img src="<?= app('app_url') ?>/images/logobig.png" align="center" width="400">
@@ -18,24 +17,22 @@
             <td class="postal">A.C.N 082 447 658</td>
             <td class="postal">ABN 81 082 447 658</td>
             <td class="postal">
-                <div style="">
+                <div>
                     Postal Address:<br> P.O.Box 280<br> KEW VIC 3101<br> Telephone: 9687 9099<br> Facsimile: 9687 9094
                 </div>
             </td>
         </tr>
     </table>
 
-    <h1>Group Report: <?= $group_name ?></h1>
+    <h1>Callout Report: <?= $job_name[0][0] ?></h1>
     <div style="text-align:center;margin:10px;">
         <h1>Callouts</h1>
     </div>
     <div style="text-align:center;margin:10px;">
         <b>Period Starting:</b>
-        <?= req("frm_start_date") ?> <b>Till</b>
-        <?= req("frm_end_date") ?>
+        <?= req("start_date") ?> <b>Till</b>
+        <?= req("end_date") ?>
     </div>
-
-    <?grapher(count($callouts),$faults)?>
 
     <table width="95%" border="1" style="border-collapse:collapse" id="table-g" cellspacing="0">
         <thead>
@@ -49,14 +46,9 @@
                 <th>Site Name</th>
                 <th>Lift Names</th>
                 <th>Order Number</th>
-                <th>Docket Number</th>
                 <th>Call Description</th>
                 <th>Tech Fault</th>
-
-                <?if(req('advanced')){?>
                 <th>Tech Description</th>
-                <?}?>
-
                 <th>Technician</th>
                 <th>Response Time Exceeded</th>
             </tr>
@@ -93,20 +85,14 @@
                     <?= $callout["order_number"] ?>&nbsp;
                 </td>
                 <td>
-                    <?= $callout["docket_number"] ?>&nbsp;
-                </td>
-                <td>
                     <?= $callout["fault_name"] ?>&nbsp;
                 </td>
                 <td>
                     <?= $callout["technician_fault_name"] ?>&nbsp;
                 </td>
-                <?if(req('advanced')){?>
                 <td>
                     <?= $callout["tech_description"] ?>
                 </td>
-                <?}?>
-
                 <td>
                     <?= $callout["technician_name"] ?>
                 </td>
@@ -117,101 +103,6 @@
             <?}?>
         </tbody>
     </table>
-
-    <h1 id="maintenance">Maintenance</h1>
-    <table width="95%" border="1" style="border-collapse:collapse" id="maintable2">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Job No</th>
-                <th>Job Address</th>
-                <th>Lifts</th>
-                <th>Technician</th>
-                <th>Tech Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?foreach ($maintenance as $row){?>
-            <tr>
-            <td id="<?= $row['maintenance_id'] ?>" class="classIDMaintenance">
-                    <?= $row["maintenance_id"] ?>
-                </td>
-                <td>
-                    <?= toDate($row["maintenance_date"]) ?>
-                </td>
-                <td>
-                    <?= $row["job_number"] ?>
-                </td>
-
-                <td>
-                    <?= $row["job_name"] ?>
-                </td>
-                <td>
-                    <?= liftNames($row["lift_ids"]) ?>
-                </td>
-                <td>
-                    <?= $row["technician_name"] ?>
-                </td>
-                <td>
-                    <?= $row["maintenance_notes"] ?>
-                </td>
-            </tr>
-            <? }?>
-        </tbody>
-    </table>
-    <h1 id="maintenance">Repair</h1>
-    <table width="95%" border="1" style="border-collapse:collapse" cellspacing="0" id="maintable3">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Time of Repair</th>
-                <th>Arrived</th>
-                <th>Finished</th>
-                <th>Job No</th>
-                <th>Site Name</th>
-                <th>Lift Names</th>
-                <th>Quote Number</th>
-                <th>Order Number</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <?foreach($repairs as $repair){?>
-            <tr>
-                <td>
-                    <?= toDate($repair["repair_time"]) ?>
-                </td>
-                <td>
-                    <?= toTime($repair["repair_time"]) ?>
-                </td>
-
-                <td>
-                    <?= toTime($repair["time_of_arrival"]) ?>
-                </td>
-                <td>
-                    <?= toTime($repair["time_of_departure"]) ?>
-                </td>
-                <td>
-                    <?= $repair["job_number"] ?>
-                </td>
-                <td>
-                    <?= $repair["job_name"] ?>
-                </td>
-                <td>
-                    <?= liftNames($repair["lift_ids"]) ?>
-                </td>
-                <td>
-                    <?= $repair["quote_no"] ?>&nbsp;</td>
-                <td>
-                    <?= $repair["order_no"] ?>
-                </td>
-
-            </tr>
-            <?}?>
-        </tbody>
-    </table>
-
 
     <div style="text-align:center;padding-top:20px;">
         <b>Printed:</b>
@@ -299,7 +190,8 @@
             text-decoration: none
         }
 
-        .classId, .classIdMaintenance {
+        .classId,
+        .classIdMaintenance {
             cursor: pointer;
             text-decoration: underline;
             color: blue;
@@ -329,9 +221,8 @@
             window.open("<?= app('url') ?>/exec/callouts/printPdf/?view_type=plain&frm_callout_id=" + id);
         });
 
-        $(".classIDMaintenance").on('click', function() {
-            var id = $(this).attr('id');
-            window.open("<?= app('url') ?>/exec/maintenance/printPdf/?view_type=plain&frm_maintenance_id=" + id);
+        $("#goBack").click(function (){
+            window.close();
         });
 
     });
@@ -371,54 +262,5 @@
             }]
 
         });
-    });
-</script>
-
-
-<script>
-    $(document).ready(function() {
-        $('#maintable2').DataTable({
-            "order": [
-                [0, "asc"]
-            ],
-            paging: false,
-            searching: false,
-            info: false,
-            columnDefs: [{
-                type: 'date-uk',
-                targets: 0
-            }]
-
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        $('#maintable3').DataTable({
-            "order": [
-                [0, "asc"]
-            ],
-            paging: false,
-            searching: false,
-            info: false,
-            columnDefs: [{
-                type: 'date-uk',
-                targets: 0
-            }]
-
-        });
-    });
-</script>
-
-
-<script>
-    $("#hide").click(function() {
-        $("#maintable2,#maintenance,#hide,#show").hide("slow", function() {});
-    });
-</script>
-<script>
-    $("#show").click(function() {
-        $("#maintable2,#maintenance").show("slow", function() {});
     });
 </script>

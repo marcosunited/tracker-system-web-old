@@ -110,7 +110,7 @@ fotter {
         </div>
         <div>03 9687 9099</div>
         <div>
-          <a href="mailto:company@example.com">info@unitedlifts.com.au</a>
+          <a href="mailto:info@unitedlifts.com.au">info@unitedlifts.com.au</a>
         </div>
       </div>
       </div>

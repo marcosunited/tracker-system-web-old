@@ -34,7 +34,7 @@
                 $emails = explode(";",req("frm_notify_email"));
 
                 foreach($emails as $email){
-                                mailer($email,"info@unitedlifts.com.au","unitedlifts.com.au",$subject,$message);
+                                mailer($email,"call@unitedlifts.com.au","unitedlifts.com.au",$subject,$message);
                 }
                 
         }

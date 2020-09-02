@@ -16,6 +16,7 @@
     <div id="liftsDiv" style="height:50px;"></div>    
     <label>For Fault</label><?parentList("frm_fault_id","_faults",null,"fault_name","")?><br>
     <br>
+    <input type="checkbox" name="advanced" style="display: none;" checked="true"><br>
     <label>&nbsp;</label><button id='formbutton'>Generate Site Report</button>  
 </form>
 

@@ -95,7 +95,7 @@
         <input name="frm_notify_email" id="frm_notify_email" value='<?= $values["notify_email"] ?>'><br>
         <label>Reported customer</label><input name="frm_reported_customer" id="frm_reported_customer" value='<?= $values["reported_customer"] ?>'><br>
 
-        <label></label><button id='formbutton'>Submit</button>
+        <label></label><button id='formbutton' >Submit</button>
         <label></label><button id='formbutton' <?= $disabled ?> <?= $color ?>>SMS</button>
     </div>
     <div style="margin-left:5px;float:left;width:550px;background-color:#faffb2;padding:10px;border:1px solid #ccc;">
@@ -136,6 +136,13 @@
 
 <script>
     $(document).ready(function() {
+        //show busy indicator
+        $("#formbutton").click(function() {
+            busyi = new busy_indicator(document.getElementById("busybox"),
+                document.querySelector("#busybox div"));
+            busyi.show();
+        });
+
         //Check if the docket exists
         $('#frm_docket_number').on("change", function() {
             var frm_docket_number = $("#frm_docket_number").val();

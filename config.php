@@ -11,8 +11,8 @@
         $root_folder = "/tracker-system-web-old";
 		
     /*Database Configuration Parameters*/
-        $app["db_server"] = "localhost";
-        $app["db_username"] = "admin";
+        $app["db_server"] = "10.42.0.149";
+        $app["db_username"] = "dev";
         $app["db_password"] = "DBPassULS$2020";
         $app["db_database"] = "uls.tracker.melbourne";
 

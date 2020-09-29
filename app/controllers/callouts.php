@@ -130,7 +130,7 @@
                         //If the notify button is not checked, then clear the email
                         if(req('chk_notify')=="")
                         {
-                                //destroy the variuable and it wont update the db, which is what we want
+                                //destroy the variable and it wont update the db, which is what we want
                                 req("frm_notify_email","");
                         }
 
@@ -214,7 +214,7 @@
 
                                 } catch(\ClickSendLib\APIException $e) {
 
-                                print_r($e->getResponseBody());
+                                        print_r($e->getResponseBody());
 
                                 }
                         }
@@ -238,7 +238,7 @@
                         inner join jobs on callouts.job_id = jobs.job_id
                         inner join technicians on callouts.technician_id = technicians.technician_id
                         inner join _faults on callouts.fault_id = _faults.fault_id
-			inner join _technician_faults on callouts.technician_fault_id = _technician_faults.technician_fault_id
+			            inner join _technician_faults on callouts.technician_fault_id = _technician_faults.technician_fault_id
                         inner join _corrections on callouts.correction_id = _corrections.correction_id
                         inner join _chargeable on callouts.chargeable_id = _chargeable.chargeable_id
                         where callout_id = $callout_id";

@@ -151,6 +151,7 @@
 
             document.getElementById('calloutForm').submit();
             event.preventDefault();
+
         }
         const form = document.getElementById('calloutForm');
         form.addEventListener('submit', submitListener);

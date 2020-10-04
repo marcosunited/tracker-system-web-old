@@ -96,7 +96,7 @@
         <label>Reported customer</label><input name="frm_reported_customer" id="frm_reported_customer" value='<?= $values["reported_customer"] ?>'><br>
 
         <label></label><button id='formbutton' >Submit</button>
-        <label></label><button id='formbutton' <?= $disabled ?> <?= $color ?>>SMS</button>
+        <label></label><button id='smssend' <?= $disabled ?> <?= $color ?>>SMS</button>
     </div>
     <div style="margin-left:5px;float:left;width:550px;background-color:#faffb2;padding:10px;border:1px solid #ccc;">
         <h2>Tech Details</h2>
@@ -137,11 +137,31 @@
 <script>
     $(document).ready(function() {
         //show busy indicator
-        $("#formbutton").click(function() {
+        /*$("#formbutton").click(function() {
             busyi = new busy_indicator(document.getElementById("busybox"),
                 document.querySelector("#busybox div"));
             busyi.show();
-        });
+        });*/
+        //show busy indicator
+        function submitListener(event) {
+            //console.log('prueba');
+            busyi = new busy_indicator(document.getElementById("busybox"),
+                document.querySelector("#busybox div"));
+            busyi.show();
+
+            document.getElementById('calloutForm').submit();
+            event.preventDefault();
+        }
+        const form = document.getElementById('calloutForm');
+        form.addEventListener('submit', submitListener);
+
+
+        /*$("#smssend").click(function() {
+            //TODO: call action to send sms
+            busyi = new busy_indicator(document.getElementById("busybox"),
+                document.querySelector("#busybox div"));
+            busyi.show()
+        });*/
 
         //Check if the docket exists
         $('#frm_docket_number').on("change", function() {

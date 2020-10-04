@@ -21,4 +21,7 @@
                 </div>
             </div>
 			<?menu(); // Initiate the Element Menu?>
+            <div id="busybox" class="fog_div">
+                <div></div>
+            </div>
             <div id="container">

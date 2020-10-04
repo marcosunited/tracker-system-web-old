@@ -21,6 +21,9 @@
         function form()
         {
             $values = _getValues("maintenance","maintenance_id");
+
+            $jobQuery = query("select j.job_id, j.job_number , j.job_name, j.invoice_notes from jobs j WHERE j.job_id =".$values["job_id"]);
+            $job = mysqli_fetch_assoc($jobQuery);
             
             if($values["maintenance_date"]==""){
                 $values["maintenance_date"] = date("d-m-Y");
@@ -56,7 +59,8 @@
 
             $data = array(
                "values"=>$values, 
-               "tasks"=>$tasks
+               "tasks"=>$tasks,
+               "job"=>$job
             );
 			
             view("maintenance/maintenance_form",$data);                                            
@@ -296,6 +300,7 @@
         {
             
             $maintenance_id = req("frm_maintenance_id");
+            $view_type = req("view_type");
             
             $query = "select * from maintenance inner join jobs on maintenance.job_id = jobs.job_id
             inner join technicians on maintenance.technician_id = technicians.technician_id where maintenance_id = $maintenance_id";
@@ -305,11 +310,12 @@
             $lifts = get_query("select * from lifts where job_id = $job_id");
 
             $data = array(
-                                "visit" => $visit,
-                                "lifts"=>$lifts
+                "visit" => $visit,
+                "lifts"=>$lifts,
+                "view_type"=>$view_type
             );
             
-            view_plain("maintenance/maintenance_print",$data);        
+            view_plain("maintenance/maintenance_print",$data);
         }
         
         function checkDocket()

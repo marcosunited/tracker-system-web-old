@@ -8,13 +8,13 @@
 	//Overall Generic Application Vars
         $app["name"] = "Service Tracking";
         $app["version"] = "17.01.31";	 
-        $root_folder = "/melbourne-tracker";
+        $root_folder = "/tracker-system-web-old";
 		
     /*Database Configuration Parameters*/
-        $app["db_server"] = "localhost";
-        $app["db_username"] = "root";
-        $app["db_password"] = "Wdugags1";
-        $app["db_database"] = "melbournemrs";
+        $app["db_server"] = "10.42.0.149";
+        $app["db_username"] = "dev";
+        $app["db_password"] = "DBPassULS$2020";
+        $app["db_database"] = "uls.tracker.melbourne";
 
         
     //---------------Not really any need to edit below here--------------------------------

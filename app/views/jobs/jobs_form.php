@@ -12,15 +12,16 @@
 
         <label>Agent id </label><? parentListReq("frm_agent_id","agents",$job["agent_id"],"agent_name","order by agent_name ASC") ?><br>
         <label>Job Number</label><input name="frm_job_number" id="frm_job_number" value="<?=$job["job_number"]?>" class="required"><br>
-        <label>Important Notes</label><textarea name="frm_important_notes"><?=$job["important_notes"]?></textarea><br>
+        <label>Important notes</label><textarea name="frm_important_notes"><?=$job["important_notes"]?></textarea><br>
         <label>Contract</label><? parentListReq("frm_contract_id","_contract",$job["contract_id"],"contract_name","order by contract_id ASC") ?><br>
-		<label>Contract status</label> <img style="width:26px" src="../../../app/images/icons/<?=$job["contract_icon"]?>" /> <label><?=$job["contract_status"]?></label><br>
+        <label>Contract status</label> <img style="width:26px" src="../../../app/images/icons/<?=$job["contract_icon"]?>" /> <label><?=$job["contract_status"]?></label><br>
+        <label>Invoice notes</label><textarea name="frm_invoice_notes"><?=$job["invoice_notes"]?></textarea><br>
 		<div id='1' style="display:block;margin-top:4px"><label>File: </label><input type="file" name="file"  id="file"><a href="<?=app('url')?>/app/uploads/<?=$job["job_attatch"]?>">Download</a><br>
         <label>Start Date</label><input type="date" name='frm_start_time'  id='frm_start_time' value='<?=$job["start_time"]?>'><br>
         <label>Finish Date</label><input type="date" name='frm_finish_time'  id='frm_finish_time' value='<?=$job["finish_time"]?>'><br>
         <label>Price</label><input name='frm_price'  id='frm_price' value='<?=$job["price"]?>'><br>
 		<label>Cancellation Date</label><input type="datetime-local" name='frm_cancel_time'  id='frm_cancel_time' value='<?=$job["cancel_time"]?>'><br>
-		<label>Cancel File: </label><input type="file" name="file2" id="file2"><a href="<?=app('url')?>/app/uploads/<?=$job["cancel_file"]?>">Download</a><br></div>
+        <br></div>
 		<label>CPI</label><input name='frm_cpi'  id='frm_cpi' value='<?=$job["cpi"]?>'><br>
         <label>Name <div class="desc">Street name and numbers</div></label>
             <input name="frm_job_name" id="frm_job_name" value="<?=$job["job_name"]?>" class="required"><br>

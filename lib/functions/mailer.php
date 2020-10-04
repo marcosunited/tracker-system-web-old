@@ -9,6 +9,10 @@
                 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
                 //send the message
-                mail($mailto, $mysubject, $message, $headers);            
+                $success = mail($mailto, $mysubject, $message, $headers);
+
+                if (!$success) {
+                        $errorMessage = error_get_last()['message'];
+                }
         }
 ?>

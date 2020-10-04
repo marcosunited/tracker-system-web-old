@@ -23,6 +23,7 @@
             <script src='$url/scripts/jquery-ui-timepicker-addon.js'></script>
             <script src='$url/scripts/mousetrap.min.js'></script>
             <script src='$url/scripts/core.js'></script>
+            <script src='$url/scripts/busy-indicator/busy_indicator.js'></script>
             <script src='$appurl/scripts/jSignature/jSignature.min.js'></script>            
             ";
     }
@@ -35,6 +36,7 @@
                 <link rel='stylesheet' href='$url/scripts/jquery-ui-1.10.4/themes/base/jquery-ui.css' type='text/css'/>
                 <link rel='stylesheet' href='$url/scripts/tablesorter/css/theme.ice.css' type='text/css' />
                 <link rel='stylesheet' href='$url/scripts/jquery-ui-timepicker-addon.css' type='text/css' media='screen' />	
+                <link rel='stylesheet' href='$url/scripts/busy-indicator/busy_indicator.css' type='text/css' />
                 <link rel='stylesheet' href='$template_url/style.css' type='text/css' media='screen' />
             ";
     }    

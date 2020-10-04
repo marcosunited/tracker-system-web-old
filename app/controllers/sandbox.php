@@ -90,7 +90,7 @@
             $mail = imap_open('{mail.unitedlifts.com.au:993/novalidate-cert/imap/ssl}','system@unitedlifts.com.au', 'ClearSky2014');
             $headers = imap_headers($mail);
             $last = imap_num_msg($mail);
-            
+
             //loop thru the emails
             for($x=1;$x<=$last;$x++){   
                 //START EMAIL

@@ -70,7 +70,7 @@
 
                         $data = array
                         (
-                                "watchlist" => query("select * from callouts_view where callout_time > $last_week  AND job_group like '%WATCHLIST%'")
+                                "watchlist" => query("select * from callouts_view where callout_time >= $last_week  AND job_group like '%WATCHLIST%'")
                         );
                         
                         view_plain("callouts/callouts_watchlist",$data);
@@ -90,6 +90,8 @@
                 function form()
                 {
                         $values = _getValues("callouts","callout_id");
+                        $jobQuery = query("select j.job_id, j.job_number , j.job_name, j.invoice_notes from jobs j WHERE j.job_id =".$values["job_id"]);
+                        $job = mysqli_fetch_assoc($jobQuery);
 
                         if($values["callout_time"]=="")
                         {
@@ -115,7 +117,8 @@
                         
                         $data = array
                         (
-                                "values"=>$values
+                                "values"=>$values,
+                                "job"=> $job
                         );
 
                         view("callouts/callouts_form",$data);                                            
@@ -127,7 +130,7 @@
                         //If the notify button is not checked, then clear the email
                         if(req('chk_notify')=="")
                         {
-                                //destroy the variuable and it wont update the db, which is what we want
+                                //destroy the variable and it wont update the db, which is what we want
                                 req("frm_notify_email","");
                         }
 
@@ -179,9 +182,7 @@
                         $tech_phone = mysqli_fetch_array(query("select * from technicians where technician_id = $tech_id"));
                         $tech_phone1 = $tech_phone["technician_phone"];
 
-
-                        //EMAIL PART Disabled until my brain is working to fix it.						
-						//include(app('path')."\\app\\views\\callouts\\callouts_email.php");
+                        //include(app('path')."\\app\\views\\callouts\\callouts_email.php");
 
                         if(req("frm_callout_status_id")==1 && req("frm_callout_id") != ''){
                         try {
@@ -213,10 +214,13 @@
 
                                 } catch(\ClickSendLib\APIException $e) {
 
-                                print_r($e->getResponseBody());
+                                        print_r($e->getResponseBody());
 
                                 }
                         }
+
+                        //TODO: create table form_history and status_mail, register mail events
+
 
                         $url = app('url');
                         if(req("frm_callout_id") != '')
@@ -231,12 +235,13 @@
                 function printPdf()
                 {
                         $callout_id = req("frm_callout_id");
+                        $view_type = req("view_type");
                         
                         $query = "select * from callouts 
                         inner join jobs on callouts.job_id = jobs.job_id
                         inner join technicians on callouts.technician_id = technicians.technician_id
                         inner join _faults on callouts.fault_id = _faults.fault_id
-			inner join _technician_faults on callouts.technician_fault_id = _technician_faults.technician_fault_id
+			            inner join _technician_faults on callouts.technician_fault_id = _technician_faults.technician_fault_id
                         inner join _corrections on callouts.correction_id = _corrections.correction_id
                         inner join _chargeable on callouts.chargeable_id = _chargeable.chargeable_id
                         where callout_id = $callout_id";
@@ -246,7 +251,8 @@
                         
                         $data = array
                         (
-                                "callout" => $callout
+                                "callout" => $callout,
+                                "view_type" => $view_type
                         );
                         
                         view_plain("callouts/callouts_print",$data);

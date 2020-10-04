@@ -468,6 +468,8 @@ class Request
             ));
         }
 
+        curl_setopt(self::$handle, CURLOPT_SSL_VERIFYPEER, FALSE);
+
         $response   = curl_exec(self::$handle);
         $error      = curl_error(self::$handle);
         $info       = self::getInfo();

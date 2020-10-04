@@ -4,7 +4,7 @@
     <label>Period Starting</label><input name="frm_start_date" id="frm_start_date" class="required"><br>
     <label>Period Ending</label><input name="frm_end_date" id="frm_end_date" class="required"><br>  
     <label>Show Round</label>
-            <select name="frm_round_id" id="frm_round_id" style="color:#fff;background-image:none;background-color:#<?=$round['round_colour']?>">
+            <select name="frm_round_id" id="frm_round_id" style="background-image:none;background-color:#<?=$round['round_colour']?>">
                 <option value="">SELECT</option>
                 <?php while($round = mysqli_fetch_array($allRounds)){?>
                     <?if($tech['round_id'] != $round['round_id']){?>

@@ -88,10 +88,10 @@
                     $liftCount = mysqli_num_rows(query($query));
                     
                     //number of calls the job has
-                    $query = "select * from callouts_view where job_id = $job_id and callout_time > $start_date AND callout_time < $end_date";
+                    $query = "select * from callouts_view where job_id = $job_id and callout_time >= $start_date AND callout_time <= $end_date";
                     $callouts = get_query($query);
-					$callCount = count($callouts);
-					$callCountTotal = $callCountTotal + $callCount;
+                    $callCount = count($callouts);
+                    $callCountTotal = $callCountTotal + $callCount;
 					
 					foreach($callouts as $callout){
 						if(isset($faults[$callout["fault_name"]])){
@@ -131,6 +131,39 @@
                 );
                 view_plain("reports/reports_callouts_generate",$data);
         }
+
+        function callouts_query()
+        {
+            $start_date = strtotime(req("start_date"));
+            $end_date = strtotime(req("end_date"));
+            $job_id = req("job_id");
+
+            $query_jobs = "select job_name from jobs where job_id = $job_id";
+
+            $query = "select callout_id,  
+                            callout_time,
+                            time_of_arrival,
+                            time_of_departure,
+                            job_number,
+                            job_name,
+                            lift_ids,
+                            order_number,
+                            fault_name,
+                            technician_fault_name,
+                            tech_description,
+                            technician_name
+                    from callouts_view where job_id = $job_id and callout_time >= $start_date AND callout_time <= $end_date";
+            
+            $callouts = get_query($query);
+            $job_name = get_query($query_jobs);
+
+            $data = array(
+                "callouts"=>$callouts,
+                "job_name"=>$job_name
+            );
+
+            view_plain("reports/reports_callouts_query",$data);
+        }
         
         function group_generate()
         {
@@ -140,8 +173,8 @@
             
             $query = "select * from callouts_view 
 				where job_group like '%$group_name%' 
-				AND callout_time > $start_date 
-				AND callout_time < $end_date
+				AND callout_time >= $start_date 
+				AND callout_time <= $end_date
 				ORDER BY callout_time DESC
 				";    
             // echo $query;
@@ -157,10 +190,10 @@
             $callouts = get_query($query);
 
             $query1 = "select * from repairs 
-            inner join jobs where repairs.job_id = jobs.job_id
+            inner join jobs on repairs.job_id = jobs.job_id
             where job_group like '%$group_name%' 
-            AND repair_time > $start_date 
-            AND repair_time < $end_date";   
+            AND repair_time >= $start_date 
+            AND repair_time <= $end_date";   
             
             $repairs = get_query($query1);
             
@@ -173,8 +206,8 @@
                                          from maintenance_view M
                                         LEFT JOIN maintenance_tasks_weekly W ON M.maintenance_id = W.maintenance_id            
                                         where M.job_group like '%$group_name%' 
-                                        AND M.maintenance_date > $start_date 
-                                        AND M.maintenance_date < $end_date
+                                        AND M.maintenance_date >= $start_date 
+                                        AND M.maintenance_date <= $end_date
                                         AND (M.lift_id IS NULL OR  M.lift_id > 0 )
                                         AND M.technician_id <> 41 order by M.job_address,M.job_address_number,M.maintenance_date");
                                                                              
@@ -196,14 +229,7 @@
                 "repairs"=>$repairs
             );
 
-            view_plain("reports/reports_group_generate",$data);
-// echo "select * from callouts_view 
-// 				where job_group like '%$group_name%' 
-// 				AND callout_time > $start_date 
-// 				AND callout_time < $end_date
-// 				AND callout_status_id = 2
-				
-// 				ORDER by job_address,job_address_number,callout_time";			
+            view_plain("reports/reports_group_generate",$data);	
         }
         
         function group_maintenance_generate()
@@ -222,8 +248,8 @@
                         LEFT JOIN maintenance_tasks_weekly W ON M.maintenance_id = W.maintenance_id
                                         where M.job_group like '%$group_name%' 
                                         AND (M.lift_id IS NULL OR M.lift_id > 0)
-                                        AND M.maintenance_date > $start_date 
-                                        AND M.maintenance_date < $end_date
+                                        AND M.maintenance_date >= $start_date 
+                                        AND M.maintenance_date <= $end_date
                                         $tasks
                                         order by M.job_address,M.job_address_number";
            // echo $query;
@@ -250,15 +276,15 @@
             $fault_id = req("frm_fault_id");
             
             $query = "select * from callouts_view where 
-            callout_time > $start_date AND 
-            callout_time < $end_date AND 
+            callout_time >= $start_date AND 
+            callout_time <= $end_date AND 
             job_id = $job_id";
 
             $query1 = "select * from repairs 
             inner join jobs where repairs.job_id = jobs.job_id
             job_id = $job_id
-            AND repair_time > $start_date 
-            AND repair_time < $end_date";   
+            AND repair_time >= $start_date 
+            AND repair_time <= $end_date";   
             
             $repairs = get_query($query1);
             
@@ -272,32 +298,15 @@
          from maintenance_view M
         LEFT JOIN maintenance_tasks_weekly W ON M.maintenance_id = W.maintenance_id            
         where job_id = $job_id 
-        AND M.maintenance_date > $start_date 
-        AND M.maintenance_date < $end_date
+        AND M.maintenance_date >= $start_date 
+        AND M.maintenance_date <= $end_date
         AND (M.lift_id IS NULL OR  M.lift_id > 0 )
         AND M.technician_id <> 41 order by M.job_address,M.job_address_number,M.maintenance_date");
-            //foreach($_REQUEST as $req=>$val)
-            //{
-            //    if(strstr($req,"lift_")){
-            //        $query .= " AND lift_ids like '%|$val|%' ";
-            //    }
-			//}
-            
-            //if(req("frm_fault_id"))
-            //   $query .= " AND fault_id = $fault_id ";
-            
-            //if(req("frm_order_by"))
-            //    $query .=" order by ".req("frm_order_by")." ".req("frm_direction");
             
             $agent_id = $job["agent_id"];
             $agent = mysqli_fetch_array(query("select * from agents where agent_id = $agent_id"));
-            
-            //get results for the graph
-
 			$result = get_query($query);
-            
 			$faults = array();
-            
 			
             foreach($result as $row)
             {
@@ -432,15 +441,6 @@
 
             $endYearMonthWeek = $endYear . $endMonth .$end_week ;
 
-            
-
-            /*
-            $fault_id = substr(req("frm_start_date") ,6)
-            
-            $query = "select * from maintenance
-            inner join technicians on maintenance.technician_id = technicians.technician_id
-            where maintenance_date >= $start_date AND maintenance_date < $end_date AND job_id = $job_id AND completed_id = 2";
-            */
             $query = "  SELECT W.* , 
                         getSplittedTasks( W.maintenance_id ,SUBSTRING( W.year_month_week ,1  ,4) ,SUBSTRING( W.year_month_week ,5  ,2 ) ,SUBSTRING( W.year_month_week ,7  ,2 ) ) weeklyTasks ,
                         getTaskName( getSplittedTasks( W.maintenance_id ,SUBSTRING( W.year_month_week ,1  ,4) ,SUBSTRING( W.year_month_week ,5  ,2 ) ,SUBSTRING( W.year_month_week ,7  ,2 ) ), L.lift_type) tasks,
@@ -458,22 +458,6 @@
                                 ( W.year_month_week BETWEEN $startYearMonthWeek AND $endYearMonthWeek )
                         ORDER BY W.maintenance_id ,W.year_month_week ,W.date ";
 
-            /*
-
-
-
-            foreach($_REQUEST as $req=>$val)
-            {
-                if(strstr($req,"lift_")){
-                    $query .= " AND lift_ids like '%|$val|%' ";
-                }
-            }
-            
-            if(req("frm_task_id"))
-                $query .= " AND task_ids like '%|".req("frm_task_id")."|%'";
-            
-            if(req("frm_order_by"))
-                $query .=" order by ".req("frm_order_by")." ".req("frm_direction");*/
             
             $agent_id = $job["agent_id"];
             $agent = mysqli_fetch_array(query("select * from agents where agent_id = $agent_id"));
@@ -537,10 +521,10 @@
             $end_date = strtotime(req("frm_end_date"));
 
             
-            $query = "select * from callouts
-            inner join jobs on callouts.job_id = jobs.job_id
-			where callout_time >= $start_date 
-			AND callout_time < $end_date";
+            $query = "select * from callouts_full cf
+            inner join jobs on cf.job_id = jobs.job_id
+			where cf.callout_time >= $start_date 
+			AND cf.callout_time <= $end_date";
 
             //$num_rows = mysql_num_rows($query);
 
@@ -647,10 +631,10 @@
             $contents = stripslashes($contents);
 
             define("DOMPDF_ENABLE_HTML5PARSER", true);
-define("DOMPDF_ENABLE_FONTSUBSETTING", true);
-define("DOMPDF_UNICODE_ENABLED", true);
-define("DOMPDF_DPI", 160);
-define("DOMPDF_ENABLE_REMOTE", true);
+            define("DOMPDF_ENABLE_FONTSUBSETTING", true);
+            define("DOMPDF_UNICODE_ENABLED", true);
+            define("DOMPDF_DPI", 160);
+            define("DOMPDF_ENABLE_REMOTE", true);
 
             require_once(app('lib_path')."/functions/dompdf/dompdf_config.inc.php");
             $dompdf = new DOMPDF();
@@ -700,8 +684,8 @@ define("DOMPDF_ENABLE_REMOTE", true);
                     
                     $callouts = query("select * from callouts 
                         inner join jobs on callouts.job_id = jobs.job_id
-                        where callout_time > $start_date
-                        AND callout_time < $end_date
+                        where callout_time >= $start_date
+                        AND callout_time <= $end_date
                         AND lift_ids LIKE '%|$lift_id|%'
                     ");
                     

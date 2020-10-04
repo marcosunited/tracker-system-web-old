@@ -80,7 +80,7 @@
     </tbody>
     <?while($row=mysqli_fetch_array($callouts)){?>
         <tr>
-            <td align="center"> <?= $row["date"] /*date("d-m-Y G:i:s",$row["maintenance_date"]);*/ ?></td>
+            <td align="center"> <?= date("Y-m-d H:i:s", $row["maintenance_date"]) ?></td>
             <td align="center"> <?= $row["yearVal"]?></td>
             <td align="center"> <?= $row["monthVal"]?></td>
             <td align="center"> <?= $row["weekVal"]?></td>

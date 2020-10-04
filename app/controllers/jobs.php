@@ -17,42 +17,43 @@
                         
                         $data = array(
                                 "result" => query("select *, case 
-															when contract_flag = 2 then 'contract_ok.svg'
-															when contract_flag = 1 then 'contract_coming_due.svg'
-															when contract_flag = 0 then 'contract_overdue.svg'
-														  else 'no_information.svg'
-														  end AS contract_icon
+                                                        when contract_flag = 2 then 'contract_ok.svg'
+                                                        when contract_flag = 1 then 'contract_coming_due.svg'
+                                                        when contract_flag = 0 then 'contract_overdue.svg'
+                                                        else 'no_information.svg'
+                                                        end AS contract_icon
 
-												  FROM (
-													select 
-														job_id,
-														job_suburb,
-														job_number,
-														job_agent_contact,
-														agent_name,
-														status_name,
-														job_name,
-														job_floors,
-														job_address,
-														job_address_number,
-														job_contact_details,
-														job_owner_details,
-														job_group,
-														round_name,
-														round_colour,
-													  (select count(*) from lifts where lifts.job_id= jobs.job_id) as lift_count,
-													   case 
-															when DATE_SUB(DATE(FROM_UNIXTIME(finish_time)), INTERVAL 30 DAY) >= NOW() then 2
-															when DATE_SUB(DATE(FROM_UNIXTIME(finish_time)), INTERVAL 30 DAY) < NOW() AND DATE(FROM_UNIXTIME(finish_time)) > DATE_SUB(NOW(), INTERVAL 1 DAY) then 1
-															when DATE_SUB(DATE(FROM_UNIXTIME(finish_time)), INTERVAL 30 DAY) < NOW() then 0
-													  else -1
-													   end AS contract_flag
-													from jobs 
-													inner join agents on jobs.agent_id = agents.agent_id
-													inner join _status on jobs.status_id = _status.status_id
-													inner join rounds on jobs.round_id = rounds.round_id
-												) AS jobs
-												$where
+                                                        FROM (
+                                                        select 
+                                                                job_id,
+                                                                job_suburb,
+                                                                job_number,
+                                                                job_agent_contact,
+                                                                agent_name,
+                                                                status_name,
+                                                                job_name,
+                                                                job_floors,
+                                                                job_address,
+                                                                job_address_number,
+                                                                job_contact_details,
+                                                                job_owner_details,
+                                                                job_group,
+                                                                round_name,
+                                                                round_colour,
+                                                                invoice_notes,
+                                                                (select count(*) from lifts where lifts.job_id= jobs.job_id) as lift_count,
+                                                                case 
+                                                                        when DATE_SUB(DATE(FROM_UNIXTIME(finish_time)), INTERVAL 30 DAY) >= NOW() then 2
+                                                                        when DATE_SUB(DATE(FROM_UNIXTIME(finish_time)), INTERVAL 30 DAY) < NOW() AND DATE(FROM_UNIXTIME(finish_time)) > DATE_SUB(NOW(), INTERVAL 1 DAY) then 1
+                                                                        when DATE_SUB(DATE(FROM_UNIXTIME(finish_time)), INTERVAL 30 DAY) < NOW() then 0
+                                                                else -1
+                                                                end AS contract_flag
+                                                        from jobs 
+                                                        inner join agents on jobs.agent_id = agents.agent_id
+                                                        inner join _status on jobs.status_id = _status.status_id
+                                                        inner join rounds on jobs.round_id = rounds.round_id
+                                                ) AS jobs
+                                                $where
                                 ")
                         );                      
                         view("jobs/jobs_table",$data);
@@ -177,7 +178,7 @@
                         view_plain("jobs/jobs_maintenance",$data);                       
                 }
 				
-				function repair()
+                function repair()
                 {
                         $id = req("frm_job_id");
                         $query = "select * from repairs where job_id = $id order by repair_time DESC
@@ -250,4 +251,3 @@
                         redirect("$url/exec/jobs/?alert=Job and callouts Deleted");
                 }
         }
-?>

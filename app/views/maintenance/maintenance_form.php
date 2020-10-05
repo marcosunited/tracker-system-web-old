@@ -9,7 +9,7 @@
     <a href="<?= app('url') ?>/exec/maintenance/printPdf/?frm_maintenance_id=<?= $values['maintenance_id'] ?>" target="_blank">Print Maintenance Visit</a>
 </p>
 &nbsp;
-<form action='<?= app("url") ?>/exec/maintenance/action/' id='calloutForm' name='calloutForm' method="post">
+<form action='<?= app("url") ?>/exec/maintenance/action/' id='maintenanceForm' name='maintenanceForm' method="post">
     <div style="float:left;width:640px;background-color:#f9f9f9;padding:10px;border:1px solid #ccc;">
         <h2>Job Details</h2>
 
@@ -110,6 +110,20 @@
 <script>
     $(document).ready(function() {
 
+        //show busy indicator
+        function submitListener(event) {
+            //console.log('prueba');
+            busyi = new busy_indicator(document.getElementById("busybox"),
+                document.querySelector("#busybox div"));
+            busyi.show();
+
+            document.getElementById('maintenanceForm').submit();
+            event.preventDefault();
+
+        }
+        const form = document.getElementById('maintenanceForm');
+        form.addEventListener('submit', submitListener);
+
         //Check if the docket exists
         $('#frm_docket_no').on("change", function() {
             var frm_docket_number = $("#frm_docket_no").val();
@@ -151,7 +165,7 @@
         }
 
         //enable form validation
-        $('#calloutForm').validate();
+        $('#maintenanceForm').validate();
 
         //What do do when the selected job changes, Update the 'Lifts DIV'
         $("#frm_job_id").change(function() {

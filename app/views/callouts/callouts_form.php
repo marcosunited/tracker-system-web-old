@@ -137,12 +137,6 @@
 <script>
     $(document).ready(function() {
         //show busy indicator
-        /*$("#formbutton").click(function() {
-            busyi = new busy_indicator(document.getElementById("busybox"),
-                document.querySelector("#busybox div"));
-            busyi.show();
-        });*/
-        //show busy indicator
         function submitListener(event) {
             //console.log('prueba');
             busyi = new busy_indicator(document.getElementById("busybox"),

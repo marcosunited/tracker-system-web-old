@@ -251,9 +251,7 @@
         
         function schedule()
         {
-                $query = "select * from maintenance_view                                        
-                                        where lift_id IS NULL OR  lift_id > 0 -- completed_id=1
-                                ";
+            $query = "select * from maintenance_view where (lift_id IS NULL OR  lift_id <> '') order by maintenance_date DESC LIMIT 1000;";
         
                 $calls = get_query($query);
                 
@@ -303,7 +301,7 @@
             $view_type = req("view_type");
             
             $query = "select * from maintenance inner join jobs on maintenance.job_id = jobs.job_id
-            inner join technicians on maintenance.technician_id = technicians.technician_id where maintenance_id = $maintenance_id";
+            left join technicians on maintenance.technician_id = technicians.technician_id where maintenance_id = $maintenance_id";
             $visit = mysqli_fetch_array(query($query));
             
             $job_id = $visit['job_id'];

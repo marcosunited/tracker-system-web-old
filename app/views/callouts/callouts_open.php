@@ -27,7 +27,6 @@
 	}
 ?>
         <a href="<?= app('url') ?>/exec/callouts/form/?frm_callout_id=<?= $row['callout_id'] ?>" style="<?= $mobile ?>">Edit</a> |
-        <!--a href="<?= app('url') ?>/exec/callouts/printPdf/?frm_callout_id=<?= $row['callout_id'] ?>" target="_blank">Print</a!-->
         <a href="<?= app('url') ?>/exec/callouts/delete/?frm_callout_id=<?= $row['callout_id'] ?>" style="<?= $mobile ?>" class="confirm">Delete</a>
     </td>
 </tr>

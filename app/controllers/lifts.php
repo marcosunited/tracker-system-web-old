@@ -49,4 +49,3 @@
             redirect(app("url")."/exec/lifts/?frm_job_id=$job_id&alert=Lift Deleted");
         }
 	}
-?>

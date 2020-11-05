@@ -75,10 +75,10 @@
                 </td>
 
                 <td>
-                    <?= toDateTime($callout["time_of_arrival"]) ?>
+                    <?= toTime($callout["time_of_arrival"]) ?>
                 </td>
                 <td>
-                    <?= toDateTime($callout["time_of_departure"]) ?>
+                    <?= toTime($callout["time_of_departure"]) ?>
                 </td>
                 <td>
                     <?= $callout["job_number"] ?>

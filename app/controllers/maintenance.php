@@ -4,12 +4,23 @@
 		
         function index()
         {
-                $query = "select * from maintenance
-                        LEFT JOIN maintenance_tasks_weekly  ON maintenance.maintenance_id = maintenance_tasks_weekly.maintenance_id                            
-                        inner join jobs on maintenance.job_id = jobs.job_id
-                        inner join technicians on maintenance.technician_id = technicians.technician_id
-                        where maintenance.lift_id IS NULL OR  maintenance.lift_id > 0  
-                        order by maintenance_date DESC limit 0,2000";
+                $query = "select 
+                maintenance.maintenance_id,
+                maintenance.maintenance_date,
+                maintenance.docket_no,
+                job_name,
+                job_address_number,
+                job_address,
+                job_suburb,
+                maintenance.lift_ids,
+                job_group,
+                technicians.technician_name 
+                from maintenance
+                LEFT JOIN maintenance_tasks_weekly  ON maintenance.maintenance_id = maintenance_tasks_weekly.maintenance_id                            
+                inner join jobs on maintenance.job_id = jobs.job_id
+                inner join technicians on maintenance.technician_id = technicians.technician_id
+                where maintenance.lift_id IS NULL OR  maintenance.lift_id > 0  
+                order by maintenance_date DESC limit 0,2000;";
                             
                 $data = array(
                         "result" => get_query($query)

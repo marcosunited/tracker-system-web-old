@@ -11,9 +11,11 @@
                 $row = get_query("select * from lifts where lift_id = $id");
                 $string .= $row[0]["lift_name"];
                 $i++;
-                if($i<count($ids))
+                if($i<count($ids)){
                     $string .= ",";
+                }
             }
+
             if($return == null){
                 echo $string;
             }else{

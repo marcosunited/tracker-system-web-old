@@ -133,11 +133,59 @@
 </div>
 <div class="break"></div>
 
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApoWIL5n82jkYHO8lGc2SCPGhTNGUBhbU"
+        type="text/javascript"></script>
 <script>
+    var geocoder;
+    var map;
+
+
+    function initializeMaps() {
+        geocoder = new google.maps.Geocoder();							// create geocoder object
+        var latlng = new google.maps.LatLng(51.520838, -0.140261);		// set default lat/long (new york city)
+        var mapOptions = {												// options for map
+            zoom: 15,
+            center: latlng
+        }
+        //map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);	// create new map in the map-canvas div
+    }
+
+    function validateAddress(address){
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                const __form = document.getElementById('jobForm');
+                __form.submit();
+            } else {
+                alert('Invalid Address ' + status);
+            }
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initializeMaps);
+
     $(document).ready(function(){
-		
-    
+
+        function processForm(e) {
+            if (e.preventDefault) e.preventDefault();
+            const _form = document.getElementById('jobForm');
+
+            const address = _form.elements["frm_job_address_number"].value + " " +
+                _form.elements["frm_job_address"].value + " " +
+                _form.elements["frm_job_suburb"].value + " Australia";
+
+            validateAddress(address)
+            return false;
+        }
+        /*
+        var form = document.getElementById('jobForm');
+        if (form.attachEvent) {
+            form.attachEvent("submit", processForm);
+        } else {
+            form.addEventListener("submit", processForm);
+        }*/
+
+
+
         <?if($job["job_id"]){?>
             //setInterval(updateTable,5000);
             function updateTable()
@@ -149,6 +197,10 @@
 					//$("#sortTable1").trigger("update"); 
 				});
             }
+
+
+
+
         <?}?>
         
         

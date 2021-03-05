@@ -222,21 +222,29 @@
                 }
                         
                         //geolocate the address automagially if GPS coordinates are not included in the form submission
+                        $gps_ok = false;
                         if(req("frm_job_latitude")==""){
                                 $address = req("frm_job_address_number") ." ".req("frm_job_address") . " " . req("frm_job_suburb") . " Australia";
-                                $gps = explode(" ",geolookup($address));
+                                $geo = geolookup($address);
+                                if($geo != "ERROR!"){
+                                    $gps = explode(" ", $geo);
+                                    $gps_ok = true;
 
-                                req("frm_job_latitude",$gps[1]);
-                                req("frm_job_longitude",$gps[0]);
+                                    req("frm_job_latitude",$gps[1]);
+                                    req("frm_job_longitude",$gps[0]);
+                                }
                         }
-                        
-                        
-                        $alert = _submitForm("jobs","job_id");
 
-                        if(req("frm_job_id")){ 
-                                redirect("$url/exec/jobs/form/?alert=$alert&frm_job_id=".req("frm_job_id"));
-                        }else{ 
-                                redirect("$url/exec/jobs/?alert=$alert");
+                        if($gps_ok){
+                            $alert = _submitForm("jobs","job_id");
+                            if(req("frm_job_id")){
+                                    redirect("$url/exec/jobs/form/?alert=$alert&frm_job_id=".req("frm_job_id"));
+                            }else{
+                                    redirect("$url/exec/jobs/?alert=$alert");
+                            }
+                        }else{
+                            $alert = 'Invalid Address';
+                            redirect("$url/exec/jobs/?alert=$alert");
                         }
                 }
                 

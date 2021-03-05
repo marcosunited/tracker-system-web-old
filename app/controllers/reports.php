@@ -18,7 +18,6 @@
         }
 
         function group()
-        
         {
             $query = "select distinct job_group from jobs where status_id = 1";
             $result = query($query);
@@ -38,7 +37,6 @@
             $data = array(
                 "groups"=>$group_list
             );
-            
             view("reports/reports_group_form",$data);
         }
         
@@ -196,7 +194,7 @@
             AND repair_time <= $end_date";   
             
             $repairs = get_query($query1);
-            
+
             $maintenance = get_query("select * ,
                                             SUBSTRING( W.year_month_week ,1  ,4) yearVal, 
                                             CASE SUBSTRING( W.year_month_week ,5  ,2 )

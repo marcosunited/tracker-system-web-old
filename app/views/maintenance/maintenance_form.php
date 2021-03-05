@@ -112,7 +112,6 @@
 
         //show busy indicator
         function submitListener(event) {
-            //console.log('prueba');
             busyi = new busy_indicator(document.getElementById("busybox"),
                 document.querySelector("#busybox div"));
             busyi.show();
@@ -185,11 +184,6 @@
             timer && clearTimeout(timer);
             timer = setTimeout(searchJobs, 400);
         });
-
-        //disableLifts();
-
-        //document.getElementById("job_name").disabled =true ;
-        //document.getElementById("frm_job_id").disabled =true ;
 
 
         //Disable lift checking

@@ -542,4 +542,3 @@
 			return $this->handleResponse($this->request('format-number', $params));
 		}
 	}
-?>

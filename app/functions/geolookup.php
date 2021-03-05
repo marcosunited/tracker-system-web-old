@@ -11,16 +11,21 @@
 
         $string = str_replace (" ", "+", urlencode($string));
         $details_url ="https://maps.googleapis.com/maps/api/geocode/json?address=".$string."&key=AIzaSyApoWIL5n82jkYHO8lGc2SCPGhTNGUBhbU";
-       
+
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $details_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $response = json_decode(curl_exec($ch), true);
 
+        if (curl_errno($ch)) {
+            $err = curl_error($ch);
+            print($err);
+        }
+
         // If Status Code is ZERO_RESULTS, OVER_QUERY_LIMIT, REQUEST_DENIED or INVALID_REQUEST
         if ($response['status'] != 'OK') {
-        return "ERROR!";
+            return "ERROR!";
         }
 
         //print_r($response);

@@ -179,7 +179,7 @@
             </p>
             <p>
               <b>For Lift(s): </b>
-
+              <?=liftNames($callout["lift_ids"])?>
             </p>
 
             <b>For Floor(s):</b>

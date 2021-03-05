@@ -67,9 +67,9 @@
         {
             if(req("frm_round_id")){
                 $round_id = req("frm_round_id");
-                $query = "select * from jobs inner join rounds on jobs.round_id = rounds.round_id where jobs.round_id = $round_id and jobs.status_id = 1";     
+                $query = "select rounds.round_name, jobs.job_id, jobs.job_name, jobs.job_address, IFNULL(jobs.job_latitude, 0.0) AS job_latitude, IFNULL(jobs.job_longitude, 0.0) AS job_longitude, rounds.round_colour, rounds.round_id from jobs inner join rounds on jobs.round_id = rounds.round_id where jobs.round_id = $round_id and jobs.status_id = 1";     
             }else{
-                $query = "select * from jobs inner join rounds on jobs.round_id = rounds.round_id  WHERE jobs.status_id = 1";
+                $query = "select rounds.round_name, jobs.job_id, jobs.job_name, jobs.job_address, IFNULL(jobs.job_latitude, 0.0) AS job_latitude, IFNULL(jobs.job_longitude, 0.0) AS job_longitude, rounds.round_colour, rounds.round_id from jobs inner join rounds on jobs.round_id = rounds.round_id  WHERE jobs.status_id = 1";
             }
             $jobs = query($query);
             $data = array(

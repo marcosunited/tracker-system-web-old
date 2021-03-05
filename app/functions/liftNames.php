@@ -1,23 +1,30 @@
 <?
     function liftNames($names,$return=null)
     {
-        $ids = rtrim(ltrim($names,"|"),"|");
-        $ids = explode("|",$ids);
-        $string = "";
-		
-        $i=0;
-        foreach($ids as $id){
-            $row = get_query("select * from lifts where lift_id = $id");
-            $string .= $row[0]["lift_name"];
-            $i++;
-            if($i<count($ids))
-                $string .= ",";
+        if ($names != ''){
+            $ids = rtrim(ltrim($names,"|"),"|");
+            $ids = explode("|",$ids);
+            $string = "";
+            
+            $i=0;
+            foreach($ids as $id){
+                $row = get_query("select * from lifts where lift_id = $id");
+                $string .= $row[0]["lift_name"];
+                $i++;
+                if($i<count($ids)){
+                    $string .= ",";
+                }
+            }
+
+            if($return == null){
+                echo $string;
+            }else{
+                return $string;
+            }
         }
-		if($return == null){
-			echo $string;
-		}else{
-			return $string;
-		}		
+        else{
+            return '';
+        }
     }
     function areaNames($names)
     {

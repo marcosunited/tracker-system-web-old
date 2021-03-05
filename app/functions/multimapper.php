@@ -8,7 +8,7 @@
     function multimapper($jobs)
     {
 ?>
-         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApoWIL5n82jkYHO8lGc2SCPGhTNGUBhbU&callback=initMap"
+         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApoWIL5n82jkYHO8lGc2SCPGhTNGUBhbU"
  type="text/javascript"></script>
 		
         <div id="map-canvas" style="width: 100%; height: 100%;"></div>

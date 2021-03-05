@@ -1,7 +1,13 @@
 <?js_init()?>
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.13/sorting/date-de.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.13/sorting/date-dd-MMM-yyyy.js"></script>
 
 <div id="topbar">
     <a href="#" id="printPdf">Print As PDF</a>
@@ -33,6 +39,9 @@
         <b>Period Starting:</b>
         <?= req("frm_start_date") ?> <b>Till</b>
         <?= req("frm_end_date") ?>
+
+        <input id="startDate" type="hidden" value="<?= req("frm_start_date") ?>">
+        <input id="endDate" type="hidden" value="<?= req("frm_end_date") ?>">
     </div>
 
     <?grapher(count($callouts),$faults)?>
@@ -75,10 +84,10 @@
                 </td>
 
                 <td>
-                    <?= toDateTime($callout["time_of_arrival"]) ?>
+                    <?= toTime($callout["time_of_arrival"]) ?>
                 </td>
                 <td>
-                    <?= toDateTime($callout["time_of_departure"]) ?>
+                    <?= toTime($callout["time_of_departure"]) ?>
                 </td>
                 <td>
                     <?= $callout["job_number"] ?>
@@ -134,7 +143,7 @@
         <tbody>
             <?foreach ($maintenance as $row){?>
             <tr>
-            <td id="<?= $row['maintenance_id'] ?>" class="classIDMaintenance">
+                <td id="<?= $row['maintenance_id'] ?>" class="classIDMaintenance">
                     <?= $row["maintenance_id"] ?>
                 </td>
                 <td>
@@ -299,7 +308,8 @@
             text-decoration: none
         }
 
-        .classId, .classIdMaintenance {
+        .classId,
+        .classIdMaintenance {
             cursor: pointer;
             text-decoration: underline;
             color: blue;
@@ -312,7 +322,7 @@
 
 <form id="printForm" action="<?= app('url') ?>/exec/reports/printReport/" method="post">
     <input type="hidden" name="frm_contents" id="frm_contents" value="">
-    <input type="hidden" name="frm_filename" value="Group Report-<?= req(" frm_group_name ") . ".pdf " ?>">
+    <input type="hidden" name="frm_filename" value="Group Report-<?= req(" frm_group_name ") . ".pdf" ?>">
     <input type="hidden" name="print" value="1">
 </form>
 
@@ -364,7 +374,17 @@
             ],
             paging: false,
             searching: false,
-            info: false,
+            dom: 'Bfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: 'Group report: ' + $('#startDate').val() + '-' + $('#endDate').val()
+                },
+                {
+                    extend: 'pdf',
+                    orientation: 'landscape',
+                    title: 'Group report: ' + $('#startDate').val() + '-' + $('#endDate').val()
+                }
+            ],
             columnDefs: [{
                 type: 'date-uk',
                 targets: 0
@@ -383,7 +403,17 @@
             ],
             paging: false,
             searching: false,
-            info: false,
+            dom: 'Bfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: 'Group report: ' + $('#startDate').val() + '-' + $('#endDate').val()
+                },
+                {
+                    extend: 'pdf',
+                    orientation: 'landscape',
+                    title: 'Group report: ' + $('#startDate').val() + '-' + $('#endDate').val()
+                }
+            ],
             columnDefs: [{
                 type: 'date-uk',
                 targets: 0
@@ -401,7 +431,17 @@
             ],
             paging: false,
             searching: false,
-            info: false,
+            dom: 'Bfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: 'Group report: ' + $('#startDate').val() + '-' + $('#endDate').val()
+                },
+                {
+                    extend: 'pdf',
+                    orientation: 'landscape',
+                    title: 'Group report: ' + $('#startDate').val() + '-' + $('#endDate').val()
+                }
+            ],
             columnDefs: [{
                 type: 'date-uk',
                 targets: 0

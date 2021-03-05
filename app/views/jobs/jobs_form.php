@@ -215,11 +215,11 @@
             $('#frm_round_id').css("background-color",myVar);
         });
 		
-			if (<?=sess("auth_level")?> < 99){
+        if (<?=sess("auth_level")?> < 99){
 			$('#1').css("display", "none");
 			$('#2').css("display", "none");
 			$('#3').css("display", "none");		
-		}
+        }
         
         
         $("#jobForm").validate();

@@ -32,6 +32,9 @@
         <b>Period Starting:</b>
         <?= req("start_date") ?> <b>Till</b>
         <?= req("end_date") ?>
+
+        <input id="startDate" type="hidden" value="<?= req("start_date") ?>">
+        <input id="endDate" type="hidden" value="<?= req("end_date") ?>">
     </div>
 
     <table width="95%" border="1" style="border-collapse:collapse" id="table-g" cellspacing="0">
@@ -204,7 +207,7 @@
 
 <form id="printForm" action="<?= app('url') ?>/exec/reports/printReport/" method="post">
     <input type="hidden" name="frm_contents" id="frm_contents" value="">
-    <input type="hidden" name="frm_filename" value="Group Report-<?= req(" frm_group_name ") . ".pdf " ?>">
+    <input type="hidden" name="frm_filename" value="Group Report-<?= req(" frm_group_name ") . ".pdf" ?>">
     <input type="hidden" name="print" value="1">
 </form>
 
@@ -221,7 +224,7 @@
             window.open("<?= app('url') ?>/exec/callouts/printPdf/?view_type=plain&frm_callout_id=" + id);
         });
 
-        $("#goBack").click(function (){
+        $("#goBack").click(function() {
             window.close();
         });
 
